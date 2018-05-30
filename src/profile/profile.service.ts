@@ -33,6 +33,7 @@ export class ProfileService {
   }
 
   public async getUser(user) {
+    if (!user) { return; }
     return await this.profilesModel.findById(user._id).populate({path: 'schools', options: {populate: 'region'}});
   }
 }

@@ -1,5 +1,5 @@
-import {Region} from '../../../app/admin/edit/shared/region';
 import {Document} from 'mongoose';
+import { Region } from '../../region/interfaces/region.interface';
 
 export interface Person {
   name: string;

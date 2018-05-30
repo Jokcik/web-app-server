@@ -42,6 +42,7 @@ export class ChildrenService {
   }
 
   async updateRating() {
+    console.log('123');
     const childrens = await this.childrenModel.find()
       .populate('schools')
       .populate({path: 'competitions.competition'})

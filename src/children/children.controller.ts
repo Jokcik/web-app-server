@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Param, Put, Delete, Query} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseGuards } from '@nestjs/common';
 import { Schema } from 'mongoose';
 import {ChildrenService} from './children.service';
 import {CreateChildrenDto} from './dto/create-children.dto';
@@ -6,6 +6,7 @@ import {Children} from './interfaces/children.interface';
 import {Specialization} from '../others/interface/specialization.interface';
 import {Instruments} from '../others/interface/instruments.interface';
 import ObjectId = Schema.Types.ObjectId;
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('children')
 export class ChildrenController {
@@ -13,6 +14,7 @@ export class ChildrenController {
   }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   async create(@Body() createChildrenDto: CreateChildrenDto) {
     return this.childrenService.create(createChildrenDto);
   }
@@ -43,11 +45,13 @@ export class ChildrenController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
   async update(@Param('id') id: ObjectId, @Body() createChildrenDto: CreateChildrenDto): Promise<Children> {
     return this.childrenService.update(id, createChildrenDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: ObjectId): Promise<any> {
     return this.childrenService.remove(id);
   }

@@ -8,11 +8,11 @@ import { OthersProviders } from '../others/others.providers';
 import { RatingService } from './rating/rating';
 import { CronService } from '../cron/cron.service';
 
-const routes: any[] = [
-  { path: '/children*',  method: RequestMethod.POST },
-  { path: '/children*',  method: RequestMethod.PUT },
-  { path: '/children*',  method: RequestMethod.DELETE },
-];
+// const routes: any[] = [
+//   { path: '/children*',  method: RequestMethod.POST },
+//   { path: '/children*',  method: RequestMethod.PUT },
+//   { path: '/children*',  method: RequestMethod.DELETE },
+// ];
 
 @Module({
   imports: [DatabaseModule],
@@ -25,9 +25,9 @@ const routes: any[] = [
     ...OthersProviders
   ],
 })
-export class ChildrenModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(passport.initialize()).with().forRoutes(...routes);
-    consumer.apply(passport.authenticate('jwt', { session: false })).forRoutes(...routes);
-  }
+export class ChildrenModule {
+  // configure(consumer: MiddlewareConsumer): void {
+  //   consumer.apply(passport.initialize()).with().forRoutes(...routes);
+  //   consumer.apply(passport.authenticate('jwt', { session: false })).forRoutes(...routes);
+  // }
 }

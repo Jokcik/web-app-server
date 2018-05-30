@@ -1,4 +1,3 @@
-import {Schools} from '../../../app/admin/edit/shared/school';
 
 export class CreateProfileDto {
   readonly surname: string;
@@ -8,5 +7,5 @@ export class CreateProfileDto {
   readonly nickname: string;
 
   readonly password: string;
-  readonly schools: Schools;
+  readonly schools: string;
 }

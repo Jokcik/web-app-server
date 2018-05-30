@@ -6,10 +6,10 @@ import {DatabaseModule} from '../database/database.module';
 import {AuthService} from '../authenticate/auth.service';
 import * as passport from 'passport';
 
-const routes: any[] = [
-  { path: '/profiles', method: RequestMethod.GET },
-  { path: '/profiles/register', method: RequestMethod.POST },
-];
+// const routes: any[] = [
+//   { path: '/profiles', method: RequestMethod.GET },
+//   { path: '/profiles/register', method: RequestMethod.POST },
+// ];
 
 @Module({
   imports: [DatabaseModule],
@@ -20,9 +20,9 @@ const routes: any[] = [
     ...ProfileProviders,
   ],
 })
-export class ProfileModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(passport.initialize()).with().forRoutes(...routes);
-    consumer.apply(passport.authenticate('jwt', { session: false, failWithError: true})).forRoutes(...routes);
-  }
+export class ProfileModule {
+  // configure(consumer: MiddlewareConsumer): void {
+  //   consumer.apply(passport.initialize()).with().forRoutes(...routes);
+  //   consumer.apply(passport.authenticate('jwt', { session: false, failWithError: true})).forRoutes(...routes);
+  // }
 }
