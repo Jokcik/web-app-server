@@ -42,7 +42,6 @@ export class ChildrenService {
   }
 
   async updateRating() {
-    console.log('123');
     const childrens = await this.childrenModel.find()
       .populate('schools')
       .populate({path: 'competitions.competition'})
@@ -97,23 +96,12 @@ export class ChildrenService {
   async findAll(schoolId: ObjectId, long: boolean): Promise<Children[]> {
     let obj = schoolId ? {schools: schoolId} : {};
     if (long) {
-      const childrens = await this.childrenModel.find(obj)
+      return await this.childrenModel.find(obj)
         .populate('schools')
         .populate('instruments')
         .populate({path: 'competitions.place'})
-        .populate({path: 'competitions.level'});
-
-      const result = [];
-      childrens.forEach(children => {
-        const childrenObj = children.toObject();
-        childrenObj['rating'] = this.getRatingByChidren(children);
-
-        result.push(childrenObj);
-      });
-
-
-      return <any[]>_.sortBy(result, [function(o) { return -o.rating; }]);
-
+        .populate({path: 'competitions.level'})
+        .sort('-rating');
     }
 
     return await this.childrenModel.find(obj);
