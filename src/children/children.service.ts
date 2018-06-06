@@ -48,16 +48,17 @@ export class ChildrenService {
       .populate({path: 'competitions.place'})
       .populate({path: 'competitions.level'});
 
-    const result = [];
+    let result = [];
     childrens.forEach(children => {
       const childrenObj = children.toObject();
       childrenObj['rating'] = this.getRatingByChidren(children);
       return result.push(childrenObj);
     });
 
+    result = _.sortBy(result, [function(o) { return -o.rating; }]);
 
-    result.forEach(async children => {
-      await this.childrenModel.findByIdAndUpdate(children._id, {rating: children.rating}, {new: true})
+    result.forEach(async (children, idx) => {
+      await this.childrenModel.findByIdAndUpdate(children._id, {rating: children.rating, place: idx + 1}, {new: true})
     });
   }
 
