@@ -63,6 +63,12 @@ export class ChildrenService {
     });
   }
 
+  async getEntrant() {
+    return await this.childrenModel.find({ssuz: true})
+      .populate('schools')
+      .sort('-rating');
+  }
+
   async getRating(query: QueryChildrenParams): Promise<Children[]> {
     if (query.school_id && query.instrument_id) {
       return await this.childrenModel.find({schools: query.school_id, instruments: query.instrument_id})

@@ -37,6 +37,11 @@ export class ChildrenController {
     return this.childrenService.getRating(query);
   }
 
+  @Get('entrant')
+  async entrant(): Promise<any[]> {
+    return this.childrenService.getEntrant();
+  }
+
   @Get('specializations')
   async findAllSpecialization(): Promise<Specialization[]> {
     return this.childrenService.findAllSpecialization();
