@@ -8,6 +8,14 @@ import {Instruments} from '../others/interface/instruments.interface';
 import ObjectId = Schema.Types.ObjectId;
 import { AuthGuard } from '@nestjs/passport';
 
+export interface QueryChildrenParams {
+  school_id?: string;
+  region_id?: string;
+  specialization_id?: string;
+  instrument_id?: string;
+}
+
+
 @Controller('children')
 export class ChildrenController {
   constructor(private readonly childrenService: ChildrenService) {
@@ -25,8 +33,8 @@ export class ChildrenController {
   }
 
   @Get('rating')
-  async rating(): Promise<any[]> {
-    return this.childrenService.getRating();
+  async rating(@Query() query: QueryChildrenParams): Promise<any[]> {
+    return this.childrenService.getRating(query);
   }
 
   @Get('specializations')
