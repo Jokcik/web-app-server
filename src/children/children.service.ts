@@ -92,54 +92,76 @@ export class ChildrenService {
     if (query.school_id && query.instrument_id) {
       Object.assign(obj, {schools: query.school_id, instruments: query.instrument_id});
       return await this.childrenModel.find(obj)
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.school_id && query.specialization_id) {
       Object.assign(obj, {schools: query.school_id});
-      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
-      return childrens.filter(child => child.instruments.specialization.toString() == query.specialization_id.toString())
+      const childrens = await this.childrenModel.find(obj).populate('schools')
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .sort('-rating');
+
+      return childrens.filter(child => child.instruments.specialization._id.toString() == query.specialization_id.toString())
     }
 
     if (query.region_id && query.instrument_id) {
       Object.assign(obj, {instruments: query.instrument_id});
-      const childrens = await this.childrenModel.find(obj).populate('schools').sort('-rating');
+      const childrens = await this.childrenModel.find(obj)
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .populate('schools')
+        .sort('-rating');
+
       return childrens.filter(child => child.schools.region.toString() == query.region_id.toString());
     }
 
     if (query.region_id && query.specialization_id) {
-      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
+      const childrens = await this.childrenModel.find(obj)
+        .populate('schools')
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .sort('-rating');
+
       return childrens
         .filter(child => child.schools.region.toString() == query.region_id.toString())
-        .filter(child => child.instruments.specialization.toString() == query.specialization_id.toString());
+        .filter(child => child.instruments.specialization._id.toString() == query.specialization_id.toString());
     }
 
     if (query.instrument_id) {
       Object.assign(obj, {instruments: query.instrument_id});
       return await this.childrenModel.find(obj)
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.specialization_id) {
-      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
-      return childrens.filter(child => child.instruments.specialization.toString() == query.specialization_id.toString());
+      const childrens = await this.childrenModel.find(obj)
+        .populate('schools')
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .sort('-rating');
+      return childrens.filter(child => child.instruments.specialization._id.toString() == query.specialization_id.toString());
     }
 
     if (query.school_id) {
       Object.assign(obj, {schools: query.school_id});
       return await this.childrenModel.find(obj)
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.region_id) {
-      const childrens = await this.childrenModel.find(obj).populate('schools').sort('-rating');
+      const childrens = await this.childrenModel.find(obj)
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .populate('schools')
+        .sort('-rating');
+
       return childrens.filter(child => child.schools.region.toString() == query.region_id.toString());
     }
 
     return await this.childrenModel.find(obj)
+      .populate({path: 'instruments', populate: [{path: 'specialization'}]})
       .populate('schools')
       .sort('-rating');
   }
