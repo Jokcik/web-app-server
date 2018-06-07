@@ -13,6 +13,7 @@ export interface QueryChildrenParams {
   region_id?: string;
   specialization_id?: string;
   instrument_id?: string;
+  ssuz: boolean;
 }
 
 

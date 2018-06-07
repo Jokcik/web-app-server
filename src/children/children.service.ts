@@ -87,52 +87,59 @@ export class ChildrenService {
   }
 
   async getRating(query: QueryChildrenParams): Promise<Children[]> {
+    const obj = query.ssuz ? {ssuz: true} : {};
+
     if (query.school_id && query.instrument_id) {
-      return await this.childrenModel.find({schools: query.school_id, instruments: query.instrument_id})
+      Object.assign(obj, {schools: query.school_id, instruments: query.instrument_id});
+      return await this.childrenModel.find(obj)
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.school_id && query.specialization_id) {
-      const childrens = await this.childrenModel.find({schools: query.school_id}).populate('schools').populate('instruments').sort('-rating');
+      Object.assign(obj, {schools: query.school_id});
+      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
       return childrens.filter(child => child.instruments.specialization.toString() == query.specialization_id.toString())
     }
 
     if (query.region_id && query.instrument_id) {
-      const childrens = await this.childrenModel.find({instruments: query.instrument_id}).populate('schools').sort('-rating');
+      Object.assign(obj, {instruments: query.instrument_id});
+      const childrens = await this.childrenModel.find(obj).populate('schools').sort('-rating');
       return childrens.filter(child => child.schools.region.toString() == query.region_id.toString());
     }
 
     if (query.region_id && query.specialization_id) {
-      const childrens = await this.childrenModel.find().populate('schools').populate('instruments').sort('-rating');
+      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
       return childrens
         .filter(child => child.schools.region.toString() == query.region_id.toString())
         .filter(child => child.instruments.specialization.toString() == query.specialization_id.toString());
     }
 
     if (query.instrument_id) {
-      return await this.childrenModel.find({instruments: query.instrument_id})
+      Object.assign(obj, {instruments: query.instrument_id});
+      return await this.childrenModel.find(obj)
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.specialization_id) {
-      const childrens = await this.childrenModel.find().populate('schools').populate('instruments').sort('-rating');
+      const childrens = await this.childrenModel.find(obj).populate('schools').populate('instruments').sort('-rating');
       return childrens.filter(child => child.instruments.specialization.toString() == query.specialization_id.toString());
     }
 
     if (query.school_id) {
-      return await this.childrenModel.find({schools: query.school_id})
+      Object.assign(obj, {schools: query.school_id});
+      return await this.childrenModel.find(obj)
         .populate('schools')
         .sort('-rating');
     }
 
     if (query.region_id) {
-      const childrens = await this.childrenModel.find().populate('schools').sort('-rating');
+      const childrens = await this.childrenModel.find(obj).populate('schools').sort('-rating');
       return childrens.filter(child => child.schools.region.toString() == query.region_id.toString());
     }
 
-    return await this.childrenModel.find()
+    return await this.childrenModel.find(obj)
       .populate('schools')
       .sort('-rating');
   }
