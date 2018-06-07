@@ -38,8 +38,8 @@ export class ChildrenController {
   }
 
   @Get('entrant')
-  async entrant(@Query('specialization_id') specId): Promise<any[]> {
-    return this.childrenService.getEntrant(specId);
+  async entrant(@Query() query: QueryChildrenParams): Promise<any[]> {
+    return this.childrenService.getEntrant(query.specialization_id, query.instrument_id);
   }
 
   @Get('specializations')
