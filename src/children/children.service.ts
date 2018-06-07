@@ -63,7 +63,16 @@ export class ChildrenService {
     });
   }
 
-  async getEntrant() {
+  async getEntrant(specializationId: string) {
+    if (specializationId) {
+      const childrens = await this.childrenModel.find({ssuz: true})
+        .populate({path: 'instruments', populate: [{path: 'specialization'}]})
+        .populate('schools')
+        .sort('-rating');
+
+      return childrens.filter(child => child.instruments.specialization._id.toString() === specializationId.toString());
+    }
+
     return await this.childrenModel.find({ssuz: true})
       .populate('schools')
       .sort('-rating');
