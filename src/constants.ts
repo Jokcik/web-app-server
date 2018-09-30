@@ -17,6 +17,9 @@ export const ProfileModelName = 'Profile';
 export const GalleryModelToken = 'GalleryModelToken';
 export const GalleryModelName = 'Gallery';
 
+export const DocumentsModelToken = 'DocumentsModelToken';
+export const DocumentsModelName = 'Documents';
+
 export const TeacherModelToken = 'TeacherModelToken';
 export const TeacherModelName = 'Teacher';
 

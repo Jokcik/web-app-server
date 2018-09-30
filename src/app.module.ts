@@ -10,6 +10,7 @@ import {ChildrenModule} from './children/children.module';
 import {CompetitionModule} from './competition/competition.module';
 import {MailModule} from './sendmail/mail.module';
 import {TeacherModule} from './teacher/teacher.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import {TeacherModule} from './teacher/teacher.module';
     UploadsModule,
     MailModule,
     TeacherModule,
+    DocumentsModule,
   ],
 })
 export class ApplicationModule {

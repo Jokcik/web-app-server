@@ -3,3 +3,7 @@ export class CreateGalleryDto {
   readonly title: string;
   readonly img: string;
 }
+
+export class DeleteDocumentItem {
+  itemId: string;
+}
