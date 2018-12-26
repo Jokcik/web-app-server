@@ -26,9 +26,11 @@ export class ProfileService {
 
   async login(auth: {password: string, login: string}): Promise<any> {
     let user = await this.profilesModel.findOne({nickname: auth.login, password: auth.password});
-    if (!user) {
-      throw new BadRequestException();
-    }
+    if (!user) { throw new BadRequestException(); }
+
+    let token = await this.authService.createToken(Object.assign({}, user, {password: undefined, access_token: undefined, _id: user._id}));
+    user = await this.profilesModel.findByIdAndUpdate(user._id, {$set: {access_token: token.access_token}}, {new: true});
+
     return user;
   }
 
