@@ -177,7 +177,7 @@ export class ChildrenService {
   }
 
   private getRatingByCompetition(competition: ChildrenCompetition) {
-    const rateCompetitionLevel = competition.competition.rateLevel || competition.level.rate;
+    const rateCompetitionLevel = (competition.level._id.toString() === competition.competition.level.toString() && competition.competition.rateLevel) || competition.level.rate;
     const rateCompetitionPlace = competition.place.rate;
 
     return [rateCompetitionLevel, rateCompetitionPlace];
